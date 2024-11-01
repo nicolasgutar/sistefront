@@ -30,7 +30,7 @@ export default function SupplierList({ toggleForm }: SupplierListProps) {
             <ul className="space-y-4">
                 {suppliers.map((supplier) => (
                     <li key={supplier.id}>
-                        <SupplierContainer supplier={supplier} onDelete={handleDelete} />
+                        <SupplierContainer supplier={supplier} />
                     </li>
                 ))}
             </ul>
