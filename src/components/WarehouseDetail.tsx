@@ -1,6 +1,7 @@
-// WarehouseDetail.jsx
 import { useState } from 'react';
 import GraphComponent from "./GraphComponent";
+import productData from '../data/sales_data.json';
+import forecastData from '../data/pron_data.json';
 
 const products = [
     { id: 1, name: 'Product A', stock: 100 },
@@ -9,68 +10,11 @@ const products = [
     { id: 4, name: 'Product D', stock: 30 },
 ];
 
-const productData = {
-    'Product A': [
-        { date: '2023-01-01', amount: 4000 },
-        { date: '2023-02-01', amount: 3000 },
-        { date: '2023-03-01', amount: 5000 },
-        { date: '2023-04-01', amount: 7000 },
-        { date: '2023-05-01', amount: 6000 },
-        { date: '2023-06-01', amount: 8000 },
-        { date: '2023-07-01', amount: 9000 },
-        { date: '2023-08-01', amount: 10000 },
-        { date: '2023-09-01', amount: 8500 },
-        { date: '2023-10-01', amount: 9500 },
-        { date: '2023-11-01', amount: 7500 },
-        { date: '2023-12-01', amount: 11000 },
-    ],
-    'Product B': [
-        { date: '2023-01-01', amount: 2500 },
-        { date: '2023-02-01', amount: 2700 },
-        { date: '2023-03-01', amount: 2600 },
-        { date: '2023-04-01', amount: 2800 },
-        { date: '2023-05-01', amount: 3000 },
-        { date: '2023-06-01', amount: 3200 },
-        { date: '2023-07-01', amount: 3500 },
-        { date: '2023-08-01', amount: 3700 },
-        { date: '2023-09-01', amount: 3900 },
-        { date: '2023-10-01', amount: 4100 },
-        { date: '2023-11-01', amount: 4300 },
-        { date: '2023-12-01', amount: 4500 },
-    ],
-    'Product C': [
-        { date: '2023-01-01', amount: 5500 },
-        { date: '2023-02-01', amount: 5700 },
-        { date: '2023-03-01', amount: 5900 },
-        { date: '2023-04-01', amount: 6100 },
-        { date: '2023-05-01', amount: 6300 },
-        { date: '2023-06-01', amount: 6500 },
-        { date: '2023-07-01', amount: 6700 },
-        { date: '2023-08-01', amount: 6900 },
-        { date: '2023-09-01', amount: 7100 },
-        { date: '2023-10-01', amount: 7300 },
-        { date: '2023-11-01', amount: 7500 },
-        { date: '2023-12-01', amount: 7700 },
-    ],
-    'Product D': [
-        { date: '2023-01-01', amount: 1800 },
-        { date: '2023-02-01', amount: 1900 },
-        { date: '2023-03-01', amount: 2000 },
-        { date: '2023-04-01', amount: 2100 },
-        { date: '2023-05-01', amount: 2200 },
-        { date: '2023-06-01', amount: 2300 },
-        { date: '2023-07-01', amount: 2400 },
-        { date: '2023-08-01', amount: 2500 },
-        { date: '2023-09-01', amount: 2600 },
-        { date: '2023-10-01', amount: 2700 },
-        { date: '2023-11-01', amount: 2800 },
-        { date: '2023-12-01', amount: 2900 },
-    ],
-};
-
-
 export default function WarehouseDetail({ warehouse }) {
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [showDetail, setShowDetail] = useState(false); // Toggle for detailed view
+
+    const toggleDetail = () => setShowDetail((prev) => !prev);
 
     if (!warehouse) {
         return (
@@ -89,9 +33,17 @@ export default function WarehouseDetail({ warehouse }) {
                     Location: <span className="text-gray-700">{warehouse.location}</span>
                 </p>
 
-                {/* Products List */}
+                {/* Toggle Button */}
+                <button
+                    onClick={toggleDetail}
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                    {!showDetail ? 'Ver Menos' : 'Ver Detalle'}
+                </button>
+
+                {/* Products List with Scroll */}
                 <h3 className="text-lg font-semibold mt-6 text-gray-700">Products</h3>
-                <ul className="mt-2 space-y-2">
+                <ul className="mt-2 space-y-2 h-40 overflow-y-auto border p-2 rounded-md">
                     {products.map((product) => (
                         <li
                             key={product.id}
@@ -111,7 +63,14 @@ export default function WarehouseDetail({ warehouse }) {
             <div className="w-2/3">
                 <div className="bg-gray-50 p-4 rounded-md shadow-sm h-full">
                     {selectedProduct ? (
-                        <GraphComponent data={productData[selectedProduct.name]} />
+                        productData[selectedProduct.name] ? (
+                            <GraphComponent
+                                data1={showDetail ? productData[selectedProduct.name] : productData[selectedProduct.name].slice(-80)}
+                                data2={forecastData[selectedProduct.name]}
+                            />
+                        ) : (
+                            <p>Data for {selectedProduct.name} not available.</p>
+                        )
                     ) : (
                         <p>Select a product to see its sales graph.</p>
                     )}
