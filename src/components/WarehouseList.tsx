@@ -13,7 +13,7 @@ export default function WarehouseList({ warehouses, onSelectWarehouse }) {
 
     return (
         <div className="w-1/4 bg-white rounded-lg shadow-md p-4">
-            <h2 className="text-lg font-semibold mb-4">Warehouses</h2>
+            <h2 className="text-lg font-semibold mb-4">Almacenes</h2>
             <ul className="space-y-4">
                 {warehouses.map((warehouse) => (
                     <li
@@ -53,7 +53,7 @@ export default function WarehouseList({ warehouses, onSelectWarehouse }) {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-gray-700">Direction</label>
+                                <label className="block text-gray-700">Address</label>
                                 <input
                                     type="text"
                                     className="w-full p-2 border border-gray-300 rounded-md"

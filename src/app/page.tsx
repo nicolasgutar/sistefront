@@ -8,8 +8,8 @@ export default function HomePage() {
     const [selectedWarehouse, setSelectedWarehouse] = useState(null);
 
     const warehouses = [
-        { id: 1, name: 'Warehouse A', location: 'CC Santa FE', details: 'Details about Warehouse A' },
-        { id: 2, name: 'Warehouse B', location: 'CC Mayorca', details: 'Details about Warehouse B' },
+        { id: 1, name: 'Almacen A', location: 'CC Santa FE', details: 'Details about Warehouse A' },
+        { id: 2, name: 'Almacen B', location: 'CC Mayorca', details: 'Details about Warehouse B' },
     ];
 
     return (
