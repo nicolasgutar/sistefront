@@ -14,6 +14,11 @@ export default function Navbar() {
                         Suppliers
                     </Link>
                 </li>
+                <li>
+                    <Link href="/insights" className="text-white hover:text-gray-300 font-semibold">
+                        Insights
+                    </Link>
+                </li>
             </ul>
         </nav>
     );
